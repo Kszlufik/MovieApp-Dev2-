@@ -78,3 +78,14 @@ export const getMovies = () => {
   return data.results;
 };
 
+export const getPopularActors = async () => {
+  const response = await fetch(
+    `https://api.themoviedb.org/3/person/popular?api_key=${import.meta.env.VITE_TMDB_KEY}`
+  );
+  if (!response.ok) {
+    throw new Error(`Failed to fetch popular actors: ${response.status}`);
+  }
+  const data = await response.json();
+  return data.results;
+};
+
