@@ -1,7 +1,8 @@
 import React from "react";
 import { useQuery } from "react-query";
 import { getPopularActors } from "../api/tmdb-api";
-import { Link } from "react-router-dom";
+import ActorCard from "../components/ActorCard/ActorCard";
+import Grid from "@mui/material/Grid";
 
 interface Actor {
   id: number;
@@ -19,28 +20,21 @@ const ActorsPage: React.FC = () => {
   if (isError) return <p>Error: {(error as Error).message}</p>;
 
   return (
-    <div className="p-4">
-      <h2 className="text-2xl font-semibold mb-4">Popular Actors</h2>
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-        {actors.map(actor => (
-          <Link key={actor.id} to={`/actors/${actor.id}`}>
-            <div className="bg-white rounded-xl shadow p-2 hover:shadow-lg transition">
-              {actor.profile_path ? (
-                <img
-                  src={`https://image.tmdb.org/t/p/w200/${actor.profile_path}`}
-                  alt={actor.name}
-                  className="rounded"
-                />
-              ) : (
-                <div className="bg-gray-200 h-48 flex items-center justify-center text-sm text-gray-600 rounded">
-                  No Image
-                </div>
-              )}
-              <p className="text-center mt-2 text-sm">{actor.name}</p>
-            </div>
-          </Link>
+    <div style={{ padding: "16px" }}>
+      <h2 style={{ marginBottom: "16px", fontSize: "1.5rem", fontWeight: 600 }}>
+        Popular Actors
+      </h2>
+      <Grid container spacing={5}>
+        {actors.map((actor) => (
+          <Grid item key={actor.id} xs={6} md={3} lg={2}>
+            <ActorCard
+              id={actor.id}
+              name={actor.name}
+              profile_path={actor.profile_path}
+            />
+          </Grid>
         ))}
-      </div>
+      </Grid>
     </div>
   );
 };
