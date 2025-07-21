@@ -3,6 +3,9 @@ import { useQuery } from "react-query";
 import { getPopularActors } from "../api/tmdb-api";
 import ActorCard from "../components/ActorCard/ActorCard";
 import Grid from "@mui/material/Grid";
+import Header from "../components/headerMovieList";
+
+
 
 interface Actor {
   id: number;
@@ -20,10 +23,8 @@ const ActorsPage: React.FC = () => {
   if (isError) return <p>Error: {(error as Error).message}</p>;
 
   return (
-    <div style={{ padding: "16px" }}>
-      <h2 style={{ marginBottom: "16px", fontSize: "1.5rem", fontWeight: 600 }}>
-        Popular Actors
-      </h2>
+    <div style={{ padding: "1px" }}>
+      <Header title="Popular Actors" />
       <Grid container spacing={5}>
         {actors.map((actor) => (
           <Grid item key={actor.id} xs={6} md={3} lg={2}>
