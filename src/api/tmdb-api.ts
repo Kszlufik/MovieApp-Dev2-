@@ -59,7 +59,7 @@ export const getMovies = () => {
 };
 
 
-    export const getMovieReviews = (id: string | number) => { //movie id can be string or number
+    export const getMovieReviews = (id: string | number) => { 
     return fetch(
       `https://api.themoviedb.org/3/movie/${id}/reviews?api_key=${import.meta.env.VITE_TMDB_KEY}`
     )
@@ -89,3 +89,23 @@ export const getPopularActors = async () => {
   return data.results;
 };
 
+export const getActorDetails = async (id: number | string) => {
+  const response = await fetch(
+    `https://api.themoviedb.org/3/person/${id}?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US`
+  );
+  if (!response.ok) {
+    throw new Error(`Failed to fetch actor details: ${response.status}`);
+  }
+  return response.json();
+};
+
+export const getActorCredits = async (id: number | string) => {
+  const response = await fetch(
+    `https://api.themoviedb.org/3/person/${id}/movie_credits?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US`
+  );
+  if (!response.ok) {
+    throw new Error(`Failed to fetch actor credits: ${response.status}`);
+  }
+  const data = await response.json();
+  return data.cast; 
+};
