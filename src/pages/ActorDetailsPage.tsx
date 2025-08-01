@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useQuery } from "react-query";
 import { getActorDetails, getActorCredits } from "../api/tmdb-api";
 import Grid from "@mui/material/Grid";
@@ -63,20 +63,31 @@ const ActorDetailsPage: React.FC = () => {
           <Grid container spacing={2}>
             {credits.slice(0, 12).map((movie: any) => (
               <Grid item key={movie.id} xs={6} sm={4} md={3} lg={2}>
-                <Card>
-                  <CardMedia
-                    component="img"
-                    image={
-                      movie.poster_path
-                        ? `https://image.tmdb.org/t/p/w200/${movie.poster_path}`
-                        : "https://via.placeholder.com/200x300?text=No+Image"
-                    }
-                    alt={movie.title}
-                  />
-                  <CardContent>
-                    <Typography variant="body2">{movie.title}</Typography>
-                  </CardContent>
-                </Card>
+                <Link
+                  to={`/movies/${movie.id}`}
+                  style={{ textDecoration: "none" }}
+                >
+                  <Card sx={{ height: "100%", cursor: "pointer" }}>
+                    <CardMedia
+                      component="img"
+                      image={
+                        movie.poster_path
+                          ? `https://image.tmdb.org/t/p/w200/${movie.poster_path}`
+                          : "https://via.placeholder.com/200x300?text=No+Image"
+                      }
+                      alt={movie.title}
+                    />
+                    <CardContent>
+                      <Typography
+                        variant="body2"
+                        align="center"
+                        color="text.primary"
+                      >
+                        {movie.title}
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Link>
               </Grid>
             ))}
           </Grid>
