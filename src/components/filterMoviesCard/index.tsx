@@ -33,7 +33,7 @@ const styles = {
 
  
 interface FilterMoviesCardProps {
-  onUserInput: (f: FilterOption, s: string)  => void; // Add this line
+  onUserInput: (f: FilterOption, s: string)  => void; 
   titleFilter: string;
   genreFilter: string;
 }
