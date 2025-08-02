@@ -109,3 +109,14 @@ export const getActorCredits = async (id: number | string) => {
   const data = await response.json();
   return data.cast; 
 };
+
+export const getPopularTVSeries = async () => {
+  const response = await fetch(
+    `https://api.themoviedb.org/3/tv/popular?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&page=1`
+  );
+  if (!response.ok) {
+    throw new Error(`Failed to fetch TV series: ${response.status}`);
+  }
+  return response.json().then(data => data.results);
+};
+
