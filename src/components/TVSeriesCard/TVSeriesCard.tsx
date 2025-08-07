@@ -13,20 +13,20 @@ interface TVSeriesCardProps {
 
 const TVSeriesCard: React.FC<TVSeriesCardProps> = ({ id, name, poster_path }) => {
   return (
-    <Card sx={{ maxWidth: 200 }}>
-      <Link to={`/tv/${id}`} style={{ textDecoration: "none" }}>
+    <Card sx={{ maxWidth: 345 }}>
+      <Link to={`/tv/${id}`} style={{ textDecoration: "none", color: "inherit" }}>
         <CardMedia
           component="img"
-          height="300"
+          height="500"
           image={
             poster_path
               ? `https://image.tmdb.org/t/p/w500${poster_path}`
-              : "https://via.placeholder.com/200x300?text=No+Image"
+              : "https://via.placeholder.com/500x750?text=No+Image"
           }
           alt={name}
         />
         <CardContent>
-          <Typography variant="subtitle1" component="div">
+          <Typography variant="subtitle1" component="div" noWrap>
             {name}
           </Typography>
         </CardContent>

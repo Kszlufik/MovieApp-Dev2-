@@ -9,7 +9,10 @@ interface TVSeries {
   id: number;
   name: string;
   poster_path: string | null;
+  first_air_date: string;
+  vote_average: number;
 }
+
 
 const TVSeriesPage: React.FC = () => {
   const { data: series = [], isLoading, isError, error } = useQuery<TVSeries[]>(
