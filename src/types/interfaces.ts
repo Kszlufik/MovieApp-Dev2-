@@ -88,4 +88,13 @@ export interface DiscoverMovies {
   }
 
 
-
+export interface BaseTVProps {
+  id: number;
+  name: string;
+  overview: string;
+  first_air_date: string;
+  vote_average: number;
+  popularity: number;
+  poster_path?: string;
+  genre_ids?: number[];
+}

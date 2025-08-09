@@ -4,18 +4,10 @@ import { getPopularTVSeries } from "../api/tmdb-api";
 import TVSeriesCard from "../components/TVSeriesCard/TVSeriesCard";
 import Grid from "@mui/material/Grid";
 import Header from "../components/headerMovieList";
-
-interface TVSeries {
-  id: number;
-  name: string;
-  poster_path: string | null;
-  first_air_date: string;
-  vote_average: number;
-}
-
+import { BaseTVProps } from "../types/interfaces";
 
 const TVSeriesPage: React.FC = () => {
-  const { data: series = [], isLoading, isError, error } = useQuery<TVSeries[]>(
+  const { data: series = [], isLoading, isError, error } = useQuery<BaseTVProps[]>(
     ["popularTVSeries"],
     getPopularTVSeries
   );
@@ -29,11 +21,7 @@ const TVSeriesPage: React.FC = () => {
       <Grid container spacing={5}>
         {series.map((tv) => (
           <Grid item key={tv.id} xs={6} md={3} lg={2}>
-            <TVSeriesCard
-              id={tv.id}
-              name={tv.name}
-              poster_path={tv.poster_path}
-            />
+            <TVSeriesCard tv={tv} />
           </Grid>
         ))}
       </Grid>
