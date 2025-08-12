@@ -98,3 +98,20 @@ export interface BaseTVProps {
   poster_path?: string;
   genre_ids?: number[];
 }
+
+export interface TVSeriesDetailsProps {
+  id: number;
+  name: string;
+  overview: string;
+  first_air_date: string;
+  vote_average: number;
+  poster_path?: string;
+  number_of_seasons: number;
+  number_of_episodes: number;
+  genres: {
+    id: number;
+    name: string;
+  }[];
+  homepage?: string;
+}
+

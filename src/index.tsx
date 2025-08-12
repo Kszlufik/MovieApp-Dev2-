@@ -14,6 +14,8 @@ import AddMovieReviewPage from './pages/addMovieReviewPage';
 import ActorsPage from "./pages/ActorsPage";
 import ActorDetailsPage from "./pages/ActorDetailsPage";
 import TVSeriesPage from "./pages/TVSeriesPage";
+import TVSeriesDetailsPage from "./pages/TVSeriesDetailsPage";
+
 
 
 
@@ -47,6 +49,8 @@ const App = () => {
   <Route path="/reviews/form" element={<AddMovieReviewPage />} />
   <Route path="/actors/:id" element={<ActorDetailsPage />} />
   <Route path="/tv" element={<TVSeriesPage />} />
+  <Route path="/tv/:id" element={<TVSeriesDetailsPage />} />
+
 
 
 

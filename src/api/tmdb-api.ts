@@ -120,3 +120,19 @@ export const getPopularTVSeries = async () => {
   return response.json().then(data => data.results);
 };
 
+export const getTVSeriesDetails = async (id: number) => {
+  const apiKey = import.meta.env.VITE_TMDB_KEY; // ✅ correct in Vite
+
+  const res = await fetch(
+    `https://api.themoviedb.org/3/tv/${id}?api_key=${apiKey}&language=en-US`
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch TV series details");
+  }
+
+  return res.json();
+};
+
+
+

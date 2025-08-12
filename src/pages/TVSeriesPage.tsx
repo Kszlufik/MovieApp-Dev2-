@@ -6,6 +6,12 @@ import Grid from "@mui/material/Grid";
 import Header from "../components/headerMovieList";
 import { BaseTVProps } from "../types/interfaces";
 
+const styles = {
+  root: {
+    backgroundColor: "#bfbfbf",  
+  },
+};
+
 const TVSeriesPage: React.FC = () => {
   const { data: series = [], isLoading, isError, error } = useQuery<BaseTVProps[]>(
     ["popularTVSeries"],
@@ -16,16 +22,18 @@ const TVSeriesPage: React.FC = () => {
   if (isError) return <p>Error: {(error as Error).message}</p>;
 
   return (
-    <div style={{ padding: "1px" }}>
-      <Header title="Popular TV Series" />
-      <Grid container spacing={5}>
+    <Grid container sx={styles.root} style={{ padding: "15px" }}>
+      <Grid item xs={12}>
+        <Header title="Popular TV Series" />
+      </Grid>
+      <Grid item container spacing={5}>
         {series.map((tv) => (
           <Grid item key={tv.id} xs={6} md={3} lg={2}>
             <TVSeriesCard tv={tv} />
           </Grid>
         ))}
       </Grid>
-    </div>
+    </Grid>
   );
 };
 
