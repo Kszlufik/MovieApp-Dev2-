@@ -25,27 +25,29 @@ const genreFiltering = {
 
 const FavouriteMoviesPage: React.FC = () => {
   const { favourites: movieIds } = useContext(MoviesContext);
+
   const { filterValues, setFilterValues, filterFunction } = useFiltering(
     [titleFiltering, genreFiltering]
   );
 
   const favouriteMovieQueries = useQueries(
-    movieIds.map((movieId) => {
-      return {
-        queryKey: ["movie", movieId],
-        queryFn: () => getMovie(movieId.toString()),
-      };
-    })
+    movieIds.map((movieId) => ({
+      queryKey: ["movie", movieId],
+      queryFn: () => getMovie(movieId),
+    }))
   );
 
-  const isLoading = favouriteMovieQueries.find((m) => m.isLoading === true);
+  const isLoading = favouriteMovieQueries.some((q) => q.isLoading);
 
   if (isLoading) {
     return <Spinner />;
   }
 
-  const allFavourites = favouriteMovieQueries.map((q) => q.data);
-  const displayedMovies = allFavourites ? filterFunction(allFavourites) : [];
+  const allFavourites = favouriteMovieQueries
+    .map((q) => q.data)
+    .filter((m): m is NonNullable<typeof m> => m != null);
+
+  const displayedMovies = filterFunction(allFavourites);
 
   const changeFilterValues = (type: string, value: string) => {
     const changedFilter = { name: type, value: value };
@@ -59,14 +61,12 @@ const FavouriteMoviesPage: React.FC = () => {
       <PageTemplate
         title="Favourite Movies"
         movies={displayedMovies}
-        action={(movie) => {
-          return (
-            <>
-              <RemoveFromFavourites {...movie} />
-              <WriteReview {...movie} />
-            </>
-          );
-        }}
+        action={(movie) => (
+          <>
+            <RemoveFromFavourites {...movie} />
+            <WriteReview {...movie} />
+          </>
+        )}
       />
       <MovieFilterUI
         onFilterValuesChange={changeFilterValues}

@@ -1,81 +1,58 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
-import CardMedia from "@mui/material/CardMedia";
-import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
-import Typography from "@mui/material/Typography";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import CardHeader from "@mui/material/CardHeader";
 import Button from "@mui/material/Button";
-import Avatar from "@mui/material/Avatar";
-
-interface ActorCardProps {
-  id: number;
-  name: string;
-  profile_path: string | null;
-}
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
+import img from "../../images/actor-placeholder.png";
+import { BaseActorProps } from "../../types/interfaces";
+import { Link } from "react-router-dom";
+import AddToFavouriteActorIcon from "../cardIcons/AddToFavouriteActor";
 
 const styles = {
   card: { maxWidth: 345 },
-  media: { height: 350 },
-  avatar: { backgroundColor: "#1976d2" }, 
+  media: { height: 400 },
 };
 
-const ActorCard: React.FC<ActorCardProps> = ({ id, name, profile_path }) => {
-  const avatarLetter = name ? name.charAt(0).toUpperCase() : "?";
+interface ActorCardProps {
+  actor: BaseActorProps;
+}
 
+const ActorCard: React.FC<ActorCardProps> = ({ actor }) => {
   return (
     <Card sx={styles.card}>
       <CardHeader
-        avatar={
-          profile_path ? (
-            <Avatar
-              alt={name}
-              src={`https://image.tmdb.org/t/p/w45/${profile_path}`}
-              sx={{ width: 40, height: 40 }}
-            />
-          ) : (
-            <Avatar sx={styles.avatar}>{avatarLetter}</Avatar>
-          )
-        }
-        title={
-          <Typography
-            variant="h6"
-            component={Link}
-            to={`/actors/${id}`}
-            sx={{ textDecoration: "none", color: "#1976d2" }} 
-          >
-            {name}
-          </Typography>
+        title={<Typography variant="h5">{actor.name}</Typography>}
+      />
+      <CardMedia
+        sx={styles.media}
+        image={
+          actor.profile_path
+            ? `https://image.tmdb.org/t/p/w500/${actor.profile_path}`
+            : img
         }
       />
-      {profile_path ? (
-        <CardMedia
-          component="img"
-          image={`https://image.tmdb.org/t/p/w500/${profile_path}`}
-          alt={name}
-          sx={styles.media}
-        />
-      ) : (
-        <div
-          style={{
-            height: 350,
-            backgroundColor: "#e0e0e0",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            color: "#757575",
-          }}
-        >
-          No Image Available
-        </div>
-      )}
       <CardContent>
+        <Grid container>
+          <Grid item xs={12}>
+            <Typography variant="body1">
+              Known for: {actor.known_for_department || "N/A"}
+            </Typography>
+          </Grid>
+        </Grid>
       </CardContent>
-      <CardActions>
-        <Button size="small" color="primary" component={Link} to={`/actors/${id}`}>
-          View Profile
-        </Button>
+      <CardActions disableSpacing>
+        
+        <AddToFavouriteActorIcon actor={actor} />
+
+        <Link to={`/actors/${actor.id}`}>
+          <Button variant="outlined" size="medium" color="primary">
+            More Info ...
+          </Button>
+        </Link>
       </CardActions>
     </Card>
   );

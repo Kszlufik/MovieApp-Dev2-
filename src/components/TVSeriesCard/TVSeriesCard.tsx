@@ -6,12 +6,13 @@ import CardMedia from "@mui/material/CardMedia";
 import CardHeader from "@mui/material/CardHeader";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
 import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
 import StarRateIcon from "@mui/icons-material/StarRate";
-import Grid from "@mui/material/Grid";
 import img from "../../images/film-poster-placeholder.png";
 import { BaseTVProps } from "../../types/interfaces";
 import { Link } from "react-router-dom";
+import AddToFavouritesIcon from "../cardIcons/AddToFavourites";
 
 const styles = {
   card: { maxWidth: 345 },
@@ -20,10 +21,9 @@ const styles = {
 
 interface TVSeriesCardProps {
   tv: BaseTVProps;
-  action?: (t: BaseTVProps) => React.ReactNode;
 }
 
-const TVSeriesCard: React.FC<TVSeriesCardProps> = ({ tv, action }) => {
+const TVSeriesCard: React.FC<TVSeriesCardProps> = ({ tv }) => {
   return (
     <Card sx={styles.card}>
       <CardHeader
@@ -35,11 +35,7 @@ const TVSeriesCard: React.FC<TVSeriesCardProps> = ({ tv, action }) => {
       />
       <CardMedia
         sx={styles.media}
-        image={
-          tv.poster_path
-            ? `https://image.tmdb.org/t/p/w500/${tv.poster_path}`
-            : img
-        }
+        image={tv.poster_path ? `https://image.tmdb.org/t/p/w500/${tv.poster_path}` : img}
       />
       <CardContent>
         <Grid container>
@@ -50,20 +46,18 @@ const TVSeriesCard: React.FC<TVSeriesCardProps> = ({ tv, action }) => {
           </Grid>
           <Grid item xs={6}>
             <Typography variant="h6" component="p">
-              <StarRateIcon fontSize="small" />{" "}
-              {tv.vote_average ? tv.vote_average.toFixed(1) : "N/A"}
+              <StarRateIcon fontSize="small" /> {tv.vote_average ? tv.vote_average.toFixed(1) : "N/A"}
             </Typography>
           </Grid>
         </Grid>
       </CardContent>
       <CardActions disableSpacing>
-        {action ? action(tv) : null}
+        <AddToFavouritesIcon {...tv} />
         <Link to={`/tv/${tv.id}`}>
-  <Button variant="outlined" size="medium" color="primary">
-    More Info ...
-  </Button>
-</Link>
-
+          <Button variant="outlined" size="medium" color="primary">
+            More Info ...
+          </Button>
+        </Link>
       </CardActions>
     </Card>
   );
